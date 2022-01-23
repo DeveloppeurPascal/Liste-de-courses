@@ -1,0 +1,99 @@
+object frmMain: TfrmMain
+  Left = 0
+  Top = 0
+  Caption = 'Liste de courses'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object lblURLAPIListeCourses: TLabel
+    Align = Top
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 10.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Position.X = 10.000000000000000000
+    Position.Y = 10.000000000000000000
+    Size.Width = 620.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.VertAlign = Leading
+    Text = 'URL de l'#39'API de liste des courses'
+    TabOrder = 0
+    object edtURLAPIListeCourses: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Bottom
+      TabOrder = 4
+      Position.Y = 18.000000000000000000
+      Margins.Right = 85.000000000000000000
+      Size.Width = 535.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      object btnSynchronisation: TButton
+        Align = Right
+        Margins.Right = -85.000000000000000000
+        Position.X = 540.000000000000000000
+        TabOrder = 0
+        Text = 'Synchro'
+        OnClick = btnSynchronisationClick
+      end
+    end
+  end
+  object gbListeCourses: TGroupBox
+    Align = Client
+    Padding.Left = 10.000000000000000000
+    Padding.Top = 10.000000000000000000
+    Padding.Right = 10.000000000000000000
+    Padding.Bottom = 10.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 420.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Courses '#224' faire'
+    TabOrder = 1
+    object vsbListeCourses: TVertScrollBox
+      Align = Client
+      Size.Width = 620.000000000000000000
+      Size.Height = 358.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 38
+      Viewport.Width = 620.000000000000000000
+      Viewport.Height = 358.000000000000000000
+    end
+    object btnAjoutProduit: TButton
+      Align = Top
+      Margins.Left = 10.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Position.X = 20.000000000000000000
+      Position.Y = 20.000000000000000000
+      Size.Width = 600.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 39
+      Text = 'Nouveau produit'
+      OnClick = btnAjoutProduitClick
+    end
+  end
+  object zoneBlocageEcran: TLayout
+    Align = Contents
+    HitTest = True
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object rectBlocageEcran: TRectangle
+      Align = Client
+      Opacity = 0.600000023841857900
+      Size.Width = 640.000000000000000000
+      Size.Height = 480.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object aniBlocageEcran: TAniIndicator
+      Align = Center
+    end
+  end
+end
