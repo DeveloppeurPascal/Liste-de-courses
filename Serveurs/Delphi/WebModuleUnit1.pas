@@ -70,6 +70,7 @@ begin
           jso.AddPair('sequence', SequenceEnSortie);
           Response.StatusCode := 200;
           Response.ContentType := 'application/json';
+          Response.CustomHeaders.Add('Access-Control-Allow-Origin=*');
           Response.Content := jso.tojson;
         finally
           jso.Free;
@@ -148,6 +149,7 @@ begin
     // avant 11 Alexandria : jso.AddPair('sequence', tjsonnumber.Create(sequence));
     Response.StatusCode := 200;
     Response.ContentType := 'application/json';
+    Response.CustomHeaders.Add('Access-Control-Allow-Origin=*');
     Response.Content := jso.tojson;
   finally
     jso.Free;
