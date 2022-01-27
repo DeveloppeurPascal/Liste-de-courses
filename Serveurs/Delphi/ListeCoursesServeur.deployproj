@@ -47,6 +47,16 @@
             <Overwrite>True</Overwrite>
             <Required>True</Required>
         </DeployFile>
+        <DeployFile Include="Linux64\Release\ListeCoursesServeur" Condition="'$(Config)'=='Release'">
+            <RemoteDir>ListeCoursesServeur\</RemoteDir>
+            <RemoteName>ListeCoursesServeur</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
     </ItemGroup>
     <ItemGroup Condition="'$(Platform)'=='iOSDevice64'"/>
 </Project>
