@@ -205,7 +205,7 @@ begin
       Writeln('(c) 2022 Patrick Prémartin');
       Writeln('');
       Writeln('-h => display this help');
-      Writeln('-port number => port number to listen (8080 by default)');
+      Writeln('-port number => port number to listen (8073 by default)');
 {$IFDEF LINUX}
       Writeln('-daemon => start the server as Linux daemon');
 {$ENDIF}
@@ -215,7 +215,7 @@ begin
       if findcmdlineswitch('port', paramvalue, True, [clstvaluenextparam]) then
         port := paramvalue.ToInteger
       else
-        port := 8080;
+        port := 8073;
 
       if WebRequestHandler <> nil then
         WebRequestHandler.WebModuleClass := WebModuleClass;
