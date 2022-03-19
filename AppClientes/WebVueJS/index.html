@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion liste de courses (VueJS)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+	<style>
+		label {
+			width:100%;
+			display:block;
+		}
+		input {
+			margin-bottom:0.5em;
+		}
+		li {
+			margin-bottom:0.5em;
+		}
+		.hidden {
+			display: none;
+		}
+		.shown {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<!-- https://vuejs.org/v2/guide/index.html -->
+	<h1>Gestion liste de courses (VueJS)</h1>
+	<div id="ApplicationListeDeCourses">
+		<div id="formulaire" class="hidden">
+			<fieldset>
+				<label for="produit">Produit :</label>
+				<input type="text" id="produit" placeholder="Produit ?"><br>
+				<label for="qte">Quantité nécessaire :</label>
+				<input type="number" id="qte" placeholder="Quantité ?" value="0"><br>
+				<button v-on:click="Enregistrer();">Enregistrer</button>
+				<button v-on:click="Annuler();">Annuler</button>
+			</fieldset>
+		</div>
+		<div id="liste" class="shown">
+			<button v-on:click="AjouterElement();">Nouveau</button>
+			<ul>
+				<ligne v-for="(item, index) in liste">
+					<li>{{item.produit}} => {{item.quantite}} <button v-on:click="ModifierElement(index);">Modifier</button></li>
+				</ligne>
+			</ul>
+			<button id="synchro" v-on:click="SynchroServeur();">Synchroniser avec le serveur</button>
+			<hr>
+			<button v-on:click="NettoieStockage();">Effacer les données du navigateur</button>
+		</div>
+	</div>
+	<script>
+		function NettoieStockage() {
+			localStorage.clear();
+			ListeDeCourses = [];
+			ModifsCourses = [];
+			ServeurSeq = -1;
+			ClientID = '';
+		}
+
+		function masque(id) {
+			e = document.getElementById(id);
+			if (e) {
+				e.className = 'hidden';
+			}
+		}
+		
+		function affiche(id) {
+			e = document.getElementById(id);
+			if (e) {
+				e.className = 'shown';
+			}
+		}
+		
+		function Enregistrer() {
+			pdt = document.getElementById('produit');
+			if (pdt) {
+				produit = pdt.value;
+				if (produit.length > 0) {
+					qte = document.getElementById('qte');
+					if (qte) {
+						quantite = parseInt(qte.value);
+						let idx = -1;
+						for (let i=0; i<ListeDeCourses.length; i++) {
+							if (ListeDeCourses[i].produit == produit) {
+								idx = i;
+								break;
+							}
+						}
+						if (idx>=0) {
+							// modification de produit
+							ModifsCourses.push({produit:ListeDeCourses[idx].produit,qte:quantite-ListeDeCourses[idx].quantite});
+							ListeDeCourses[idx].quantite = quantite;
+						} 
+						else {
+							// nouveau produit
+							ModifsCourses.push({produit:produit,qte:quantite});
+							ListeDeCourses.push({produit: produit, quantite: quantite});
+						}
+						SauveModifs(ModifsCourses);
+						SauveListe(ListeDeCourses);
+						pdt.value = '';
+						qte.value = '0';
+						//console.log(ListeDeCourses);
+					}
+				}
+			}
+			masque('formulaire');
+			affiche('liste');
+		}
+
+		function Annuler() {
+			masque('formulaire');
+			affiche('liste');
+		}
+
+		function ModifierElement(index) {
+			if ((index >=0) && (index < ListeDeCourses.length)) {
+				pdt = document.getElementById('produit');
+				if (pdt) {
+					qte = document.getElementById('qte');
+					if (qte) {
+						pdt.value = ListeDeCourses[index].produit;
+						pdt.readOnly = true;
+						qte.value = ListeDeCourses[index].quantite.toString();
+						masque('liste');
+						affiche('formulaire');
+						qte.focus();
+					}
+				}
+			}
+		}
+
+		function AjouterElement() {
+			pdt = document.getElementById('produit');
+			if (pdt) {
+				qte = document.getElementById('qte');
+				if (qte) {
+					pdt.value = '';
+					pdt.readOnly = false;
+					qte.value = '0';
+					masque('liste');
+					affiche('formulaire');
+					pdt.focus();
+				}
+			}
+		}
+		
+		function ChargeListe() {
+			liste_json = localStorage.getItem('liste');
+			if (liste_json) {
+				return JSON.parse(liste_json);
+			}
+			else {
+				return [];
+			}
+		}
+
+		function SauveListe(liste) {
+			localStorage.setItem('liste',JSON.stringify(liste));
+		}
+		
+		function ChargeModifs() {
+			liste_json = localStorage.getItem('modifs');
+			if (liste_json) {
+				return JSON.parse(liste_json);
+			}
+			else {
+				return [];
+			}
+		}
+
+		function SauveModifs(liste) {
+			localStorage.setItem('modifs',JSON.stringify(liste));
+		}
+		
+		function ChargeSequence() {
+			js = localStorage.getItem('seq');
+			if (js) {
+				return JSON.parse(js);
+			}
+			else {
+				return -1;
+			}
+		}
+
+		function SauveSequence(seq) {
+			localStorage.setItem('seq',JSON.stringify(seq));
+		}
+		
+		function ChargeIDClient() {
+			s = localStorage.getItem('cliid');
+			if (s) {
+				return s;
+			}
+			else {
+				return '';
+			}
+		}
+
+		function SauveIDClient(id) {
+			localStorage.setItem('cliid',id);
+		}
+
+		function SynchroServeur2Local() {
+			const Serveur2Local = new XMLHttpRequest();
+			Serveur2Local.open('GET', ServeurURL+'/courses?id='+ClientID+'&seq='+ServeurSeq.toString(), true);
+			Serveur2Local.onload = callback_Serveur2Local;
+			Serveur2Local.responseType = 'json';
+			Serveur2Local.send();
+			function callback_Serveur2Local() {
+				console.log(Serveur2Local.response);
+				ServeurSeq = Serveur2Local.response.sequence;
+				SauveSequence(ServeurSeq);
+				let ok = true;
+				for (let i=0; i < Serveur2Local.response.chg.length; i++) {
+					console.log(Serveur2Local.response.chg[i]);
+					ok = false;
+					for (let j=0; j < ListeDeCourses.length; j++) {
+						if (ListeDeCourses[j].produit == Serveur2Local.response.chg[i].produit) {
+							ListeDeCourses[j].quantite += Serveur2Local.response.chg[i].qte;
+							ok = true;
+							break;
+						}
+					}
+					if (! ok) {
+						ListeDeCourses.push({produit:Serveur2Local.response.chg[i].produit,quantite:Serveur2Local.response.chg[i].qte});
+					}
+				}
+				SauveListe(ListeDeCourses);
+				affiche('synchro');
+			}
+		}
+		
+		function SynchroLocal2Serveur() {
+			const Local2Serveur = new XMLHttpRequest();
+			Local2Serveur.open('POST', ServeurURL+'/courses', true);
+			Local2Serveur.onload = callback_Local2Serveur;
+			Local2Serveur.responseType = 'json';
+			Local2Serveur.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			Local2Serveur.send('id='+encodeURI(ClientID)+'&chg='+encodeURI(JSON.stringify(ModifsCourses)));
+			function callback_Local2Serveur() {
+				ModifsCourses = [];
+				SauveModifs(ModifsCourses);
+				SynchroServeur2Local();
+			}
+		}
+		
+		function SynchroServeur() {
+			masque('synchro');
+			SynchroLocal2Serveur();
+		}
+		
+		let ListeDeCourses = [];
+		let ModifsCourses = [];
+
+		//let ServeurURL = 'http://146.59.154.123:8073'; // URL:port serveur
+		let ServeurURL = 'http://192.168.1.127:8073'; // URL:port serveur
+		let ClientID = ChargeIDClient();
+		let ServeurSeq = ChargeSequence();
+		if (ClientID.length > 0) {
+			// client existant, on charge la liste actuelle
+			ListeDeCourses = ChargeListe();
+			ModifsCourses = ChargeModifs();
+		}
+		else {
+			// client non référencé, on s'enregistre sur le serveur
+			const register_request = new XMLHttpRequest();
+			register_request.open('GET', ServeurURL+'/register', true);
+			register_request.onload = callback_register;
+			register_request.responseType = 'json';
+			register_request.send();
+			function callback_register() {
+				//console.log(register_request.response);
+				ClientID = register_request.response.id;
+				SauveIDClient(ClientID);
+				for (let i=0; i < register_request.response.courses.length; i++) {
+					console.log(register_request.response.courses[i]);
+					ListeDeCourses.push({produit:register_request.response.courses[i].produit,quantite:register_request.response.courses[i].qte});
+				}
+				SauveListe(ListeDeCourses);
+				ServeurSeq = register_request.response.sequence;
+				SauveSequence(ServeurSeq);
+			}
+		}
+
+		let app = new Vue({
+			el: '#ApplicationListeDeCourses',
+			data: {
+				liste: ListeDeCourses
+			}
+		});
+	</script>
+</body>
+</html>
