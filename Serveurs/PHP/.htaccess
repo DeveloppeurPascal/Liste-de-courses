@@ -1,0 +1,5 @@
+RewriteEngine on
+
+RewriteRule ^register$ register.php [L]
+
+RewriteRule ^courses$ courses.php [L]
