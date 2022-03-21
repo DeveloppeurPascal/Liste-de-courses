@@ -41,6 +41,7 @@ var
   jso: tjsonobject;
 begin
   // GET /courses
+  Response.CustomHeaders.Add('Access-Control-Allow-Origin=*');
   if (Request.QueryFields.IndexOfName('id') < 0) then
   begin // paramètre "ID" absent
     Response.StatusCode := 400;
@@ -70,7 +71,6 @@ begin
           jso.AddPair('sequence', SequenceEnSortie);
           Response.StatusCode := 200;
           Response.ContentType := 'application/json';
-          Response.CustomHeaders.Add('Access-Control-Allow-Origin=*');
           Response.Content := jso.tojson;
         finally
           jso.Free;
@@ -98,6 +98,7 @@ var
   chg: tjsonarray;
 begin
   // POST /courses
+  Response.CustomHeaders.Add('Access-Control-Allow-Origin=*');
   if (Request.ContentFields.IndexOfName('id') < 0) then
   begin // paramètre "ID" absent
     Response.StatusCode := 400;
@@ -140,6 +141,7 @@ var
   sequence: integer;
 begin
   // GET /register
+  Response.CustomHeaders.Add('Access-Control-Allow-Origin=*');
   jso := tjsonobject.Create;
   try
     jso.AddPair('id', dm.getNewClientID);
@@ -149,7 +151,6 @@ begin
     // avant 11 Alexandria : jso.AddPair('sequence', tjsonnumber.Create(sequence));
     Response.StatusCode := 200;
     Response.ContentType := 'application/json';
-    Response.CustomHeaders.Add('Access-Control-Allow-Origin=*');
     Response.Content := jso.tojson;
   finally
     jso.Free;
