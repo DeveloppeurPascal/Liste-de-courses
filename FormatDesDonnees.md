@@ -2,19 +2,19 @@
 
 Le format et le type de stockage dépend du logiciel et de la technologie utilisée. Les données échangées par l'API doivent être dans le format défini dans l'API et encodées en UTF-8.
 
-Les libellés de produits sont des chaînes de caractères de 50 caractères maximum.
+Les libellés de produits sont des chaînes de 50 caractères maximum.
 Les quantités sont des entiers positifs, négatifs ou nuls.
-Les ID clients sont des chaînes de caractères de 50 caractères maximum.
+Les ID clients sont des chaînes de 50 caractères maximum (lettres en majuscules, lettes en minuscules, chiffres).
 Les numéros de séquence sont des entiers commençant à 0. Une valeur -1 est possible si aucune séquence n'est enregistrée.
 
 ## Courses
 
 La liste de courses contient des produits et leurs quantités.
 
-C'est un tableau. Chaque élément du tableau est un objet avec une propriété "produit" et une propriété "quantite".
+C'est un tableau. Chaque élément du tableau est un objet avec une propriété "produit" et une propriété "qte".
 
 Par exemple en JSON :
-Courses = [{"produit":"tomates","quantite":10},{"produit":"oranges","quantite":5}]
+Courses = [{"produit":"tomates","qte":10},{"produit":"oranges","qte":5}]
 
 ## Clients
 
