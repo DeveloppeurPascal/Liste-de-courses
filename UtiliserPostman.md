@@ -12,7 +12,7 @@ Le problème se pose en revanche quand vous désirez envoyer des informations en
 
 Dans Postman c'est l'onglet "Body" qu'il faut utiliser et il vous propose plusieurs solutions dont "form-data" ou "x-www-form-urlencoded".
 
-Le "form-data" encode les paramètres comme le ferait un formulaire web avec l'attribut "multipart-form-data" utilisé quasiment uniquement lorsqu'on veut envoyer des fichiers par l'intermédiaire d'un formulaire web.
+Le "form-data" encode les paramètres comme le ferait un formulaire web avec l'attribut "multipart/form-data" utilisé quasiment uniquement lorsqu'on veut envoyer des fichiers par l'intermédiaire d'un formulaire web.
 
 C'est pour cette raison qu'il propose de spécifier si chaque paramètre est du texte ou un fichier.
 
@@ -26,4 +26,4 @@ Dans certains cas vous devrez ajouter des paramètres d'entête. C'est en géné
 
 Vous pouvez vous aider de l'onglet "Authorizations" qui vous proposera la liste de champs généralement demandés selon les types d'utilisation et ajoutera votre saisie à l'entête.
 
-Si vous préférez le faire vous-mêmes car vous trouvez ça plus rapide, passez directement dans l'onglet "Headers".
+Si vous préférez le faire vous-même car vous trouvez ça plus rapide, passez directement dans l'onglet "Headers".
