@@ -1,26 +1,30 @@
-# Gestion de liste de courses
+# Shopping list management
 
-Ce projet est réalisé dans le cadre du cours "développement web" (MESIFI480821) de l'ESILV (campus La Défense) en 2022.
+[This project](https://github.com/DeveloppeurPascal/ListeDeCourse) is realized within the framework of the course "web development" of the [ESILV](https://www.esilv.fr).
 
-C'est une gestion de liste de courses (produit, quantité) avec un serveur centralisé et des clients variés.
+It is a shopping list management (product, quantity) with a centralized server and various clients.
 
-Plusieurs serveurs sont disponibles ou à développer.
-Plusieurs clients sont disponibles ou à développer.
+Several servers are available or to be developed.
+Several clients are available or to be developed.
 
-Ce projet ne peut pas être utilisé tel quel en public. Il ne contient pas de gestion de droits d'accès ni d'utilisateurs. Les données renseignées sont accessibles de toute personne connaissant l'existance d'un serveur et son API.
+This project cannot be used as is in public. It does not contain any access rights or user management. The data entered are accessible to anyone who knows the existence of a server and its API.
 
-L'objectif est de manipuler différentes technologies web et des API relativement simples. Il permet également de réfléchir à la problématique de synchronisation de données entre plusieurs utiliateurs.
+The objective is to manipulate different web technologies and relatively simple APIs. It also allows to think about the problem of data synchronization between several users.
 
-La solution utilisée ici ne sera pas forcément valide dans tout type de projet, mais reste la plus simple à mettre en place : une gestion de log des modifications.
+The solution used here will not necessarily be valid in all types of projects, but remains the simplest to set up: a management of the modifications log.
 
-## Codage en direct - rediffusions
+## Live coding - replays
 
-Le développement de ces logiciels a été réalisé en ligne sur la chaîne Twitch https://www.twitch.tv/patrickpremartin
+The development of this software was done online on [a Twitch channel](https://www.twitch.tv/patrickpremartin).
 
-Une rediffusion est (ou sera) disponible sur https://serialstreameur.fr/projet-liste-de-courses.php Elle est réservée aux abonnés du site et étudiants concernés (accès sur demande).
+A replay is available on [Serial Streamer](https://serialstreameur.fr/projet-liste-de-courses.php). It is reserved to the subscribers of the site and students concerned (access on demand).
 
-## Utilisation et droits de rediffusion
+## Use and rebroadcasting rights
 
-Les codes sources proposés dans ce dépôt sont réservés aux étudiants concernés et pourra ponctuellement être transmis aux abonnés https://zone-abo.fr sur demande. Merci de ne pas les diffuser sans accord écrit préalable.
+The source codes proposed in this repository are reserved to the students of the web development course and can be transmitted to the subscribers https://zone-abo.fr on request. Please do not distribute them without prior written consent.
 
-Si vous êtes destinataire de ce projet et son contenu, vous pouvez l'utiliser à titre personnel ou vous en inspirer pour d'autres projets.
+If you receive this project and its content, you can use it for your own purposes or be inspired by it for other projects.
+
+## Translation 
+
+Page translated from french by [DeepL](https://www.deepl.com/translator).
